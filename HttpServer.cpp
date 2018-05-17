@@ -234,14 +234,14 @@ String HttpWiFiServer::readBody(WiFiEspClient &client){
 }
 
 bool HttpWiFiServer::send(WiFiEspClient &client, int code, String contentType, String &body){
-  client.println("HTTP/1.1 " + String(code) + " OK");  
-  client.println("Access-Control-Allow-Origin: *");
-  client.println("Access-Control-Allow-Methods: GET, PUT, POST, DELETE, PATCH, OPTIONS");
-  client.println("Access-Control-Allow-Headers: Content-Type,Accept");
-  client.println("Content-Type: " + contentType);
-  client.println("Connection: close");  // the connection will be closed after completion of the response
-  client.println();
-  client.println(body);
+  client.print("HTTP/1.1 " + String(code) + " OK\r\n"  
+      "Access-Control-Allow-Origin: *\r\n");
+  client.print("Access-Control-Allow-Methods: GET, PUT, POST, DELETE, PATCH, OPTIONS\r\n");
+  client.print("Access-Control-Allow-Headers: Content-Type,Accept\r\n");
+  client.print("Content-Type: " + contentType + "\r\n"
+      "Connection: close\r\n"
+      "\r\n");  // the connection will be closed after completion of the response
+  client.print(body + "\r\n");
 }
 
 bool HttpWiFiServer::sendApiRest(WiFiEspClient &client, int code, String body){

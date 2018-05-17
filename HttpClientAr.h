@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <SPI.h>
 #include <Ethernet.h>
+#include <WiFiEsp.h>
+#include <WiFiEspClient.h>
 //#include "vendor/igniteit/arduino-basic-oo/ElementAbstract.h"
 #include "../arduino-basic-oo/ElementAbstract.h"
 
@@ -24,6 +26,20 @@ class HttpResponse{
 class HttpClientAr: public EthernetClient{  
   public:
     HttpClientAr();
+    HttpResponse httpResponse();
+
+    String readHeader();    
+    String readBody();
+
+    void sendRequest(String method, String uri);
+    void sendRequest(String method, String uri, String contentType);
+    void sendRequest(String method, String uri, String contentType, String &body);
+    void sendBody(String &body);
+};
+
+class HttpWifiClientAr: public WiFiEspClient{  
+  public:
+    HttpWifiClientAr();
     HttpResponse httpResponse();
 
     String readHeader();    
